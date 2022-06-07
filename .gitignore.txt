@@ -1,0 +1,3 @@
+./pkg/
+./src/beegogorm/.idea/
+./src/gin_project/.idea/

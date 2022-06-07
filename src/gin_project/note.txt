@@ -1,0 +1,2 @@
+GOPROXY=https://goproxy.io,direct
+GOPROXY=https://goproxy.cn,direct
