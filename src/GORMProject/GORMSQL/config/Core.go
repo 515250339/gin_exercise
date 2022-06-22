@@ -14,6 +14,11 @@ func Core() *gorm.DB {
 	}
 	// 创建表
 	err = db.AutoMigrate(&User{})
+	err = db.AutoMigrate(&CreditCard{})
+	err = db.AutoMigrate(&UserInfo{})
+	err = db.AutoMigrate(&DefaultTest1{})
+	err = db.AutoMigrate(&DefaultTest2{})
+	//err = db.AutoMigrate(&DefaultTest3{})
 	if err != nil {
 		return nil
 	} // 根据User结构体建表

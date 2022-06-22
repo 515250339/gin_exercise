@@ -11,5 +11,9 @@ func main() {
 	//config.CreateUser3(DB)
 	//config.CreateUser4(DB)
 	//config.CreateUser5(DB)
-	config.CreateUser6(DB)
+	//config.CreateUser6(DB)
+	//config.CreateUser7(DB)
+	//config.CreateUser8(DB)
+	//config.CreateUser9(DB)
+	config.UpsertFunc(DB)
 }
