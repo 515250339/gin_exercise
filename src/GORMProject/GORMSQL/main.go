@@ -15,5 +15,17 @@ func main() {
 	//config.CreateUser7(DB)
 	//config.CreateUser8(DB)
 	//config.CreateUser9(DB)
-	config.UpsertFunc(DB)
+	//config.UpsertFunc(DB)
+
+	//config.QueryTest1(DB)
+	//config.QueryTest2(DB)
+	//config.QueryTest3(DB)
+	//config.QueryALlTest(DB)
+	//config.FilterTest(DB)
+	//config.FilterMapAndStruct(DB)
+	//config.FilterTest2(DB)
+	//config.FilterNot(DB)
+	//config.FilterOr(DB)
+	//config.SelectField(DB)
+	config.OrderData(DB)
 }
