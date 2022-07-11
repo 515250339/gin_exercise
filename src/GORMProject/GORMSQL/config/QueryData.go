@@ -248,3 +248,104 @@ func OrderData(db *gorm.DB) {
 			WithoutParentheses: true},
 	}).Find(&users)
 }
+
+// LimitAndOffset `Limit` 指定获取记录的最大数量 `Offset` 指定在开始返回记录之前要跳过的记录数量
+func LimitAndOffset(db *gorm.DB) {
+	users := []User{{}}
+	db.Limit(3).Find(&users)
+	//fmt.Println(1, users)
+
+	users = []User{{}}
+	users2 := []User{{}}
+	db.Limit(1).Find(&users).Limit(-1).Find(&users2)
+	//fmt.Println(2, users)
+	//fmt.Println(3, users2)
+
+	users = []User{{}}
+	db.Limit(5).Offset(3).Find(&users)
+	//fmt.Println(4, users)
+
+	// 作者测试 Offset 必须配合 Limit 否则报错
+	//users = []User{{}}
+	//db.Offset(10).Find(&users).Offset(-1).Find(&user)
+}
+
+// GroupAndHaving 分组
+func GroupAndHaving(db *gorm.DB) {
+	users := []User{{}}
+	db.Model(&User{}).Select("name, sum(age) as total").Where(
+		"name LIKE ?", "%z%").Group("name").Find(&users)
+	fmt.Println(users)
+
+	users = []User{{}}
+	db.Model(&User{}).Select("name, sum(age) as total").Group(
+		"name").Having("name = ?", "zs").First(&users)
+	fmt.Println(users)
+
+	/*
+		rows, err := db.Table("orders").Select("date(created_at) as date, sum(amount) as total").Group("date(created_at)").Rows()
+		for rows.Next() {
+		  ...
+		}
+
+		rows, err := db.Table("orders").Select("date(created_at) as date, sum(amount) as total").Group("date(created_at)").Having("sum(amount) > ?", 100).Rows()
+		for rows.Next() {
+		  ...
+		}
+
+		type Result struct {
+		  Date  time.Time
+		  Total int64
+		}
+		db.Table("orders").Select("date(created_at) as date, sum(amount) as total").Group("date(created_at)").Having("sum(amount) > ?", 100).Scan(&results)
+	*/
+}
+
+// DistinctData 去重 从模型中选择不相同的值
+func DistinctData(db *gorm.DB) {
+	users := []User{{}}
+	db.Distinct("name", "age").Order("name, age desc").Find(&users)
+}
+
+// JoinsModel 指定join条件
+func JoinsModel(db *gorm.DB) {
+	type Result struct {
+		Name  string
+		Name2 string
+	}
+	result := Result{}
+	db.Model(&User{}).Select("user.name, user_infos.name").Joins(
+		"left join user_infos on user_infos.name = user.name").Scan(&result)
+	fmt.Println(result)
+
+	/*
+		rows, err := db.Table("users").Select("users.name, emails.email").Joins("left join emails on emails.user_id = users.id").Rows()
+		for rows.Next() {
+		  ...
+		}
+
+		db.Table("users").Select("users.name, emails.email").Joins("left join emails on emails.user_id = users.id").Scan(&results)
+
+		// 带参数的多表连接
+		db.Joins("JOIN emails ON emails.user_id = users.id AND emails.email = ?", "jinzhu@example.org").Joins("JOIN credit_cards ON credit_cards.user_id = users.id").Where("credit_cards.number = ?", "411111111111").Find(&user)
+	*/
+}
+
+// JoinsData 预加载
+func JoinsData(db *gorm.DB) {
+	userInfos := []UserInfo{{}}
+	db.Joins("CreditCard").Find(&userInfos)
+}
+
+func ScanData(db *gorm.DB) {
+	type Result struct {
+		Name string
+		Age  int
+	}
+	result := Result{}
+	db.Table("user").Select("name", "age").Scan(&result)
+	fmt.Println(result)
+
+	db.Raw("select name, age from user where name = ?", "ls").Scan(&result)
+	fmt.Println(result)
+}
