@@ -56,3 +56,9 @@ type DefaultTest2 struct {
 //	Age       uint8
 //	FullName  string `gorm:"type:GENERATED ALWAYS AS (concat(first_name,' ',last_name));default:(-);"`
 //}
+
+type TestModel struct {
+	ID     int
+	Delete gorm.DeletedAt
+	Name   string
+}

@@ -47,5 +47,14 @@ func main() {
 	//config.UpdateData10(DB)
 	//config.UpdateData11(DB)
 	//config.UpdateData12(DB)
-	config.UpdateData13(DB)
+	//config.UpdateData13(DB)
+
+	//config.DeleteData1(DB)
+	//config.DeleteData2(DB)
+	//config.DeleteData3(DB)
+	//config.DeleteData4(DB)
+	config.DeleteData5(DB)
+	//config.DeleteData6(DB)
+	//config.GetDeleteData1(DB)
+	//config.DeleteDataUnscoped(DB)
 }

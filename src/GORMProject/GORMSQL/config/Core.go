@@ -19,6 +19,7 @@ func Core() *gorm.DB {
 	err = db.AutoMigrate(&UserInfo{})
 	err = db.AutoMigrate(&DefaultTest1{})
 	err = db.AutoMigrate(&DefaultTest2{})
+	err = db.AutoMigrate(&TestModel{})
 	//err = db.AutoMigrate(&DefaultTest3{})
 	if err != nil {
 		return nil
